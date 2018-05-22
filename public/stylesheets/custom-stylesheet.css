@@ -1,0 +1,25 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	
+}
+
+.container {
+	margin: auto;
+	width: 900px;
+	
+	text-align: center;
+
+}
+
+#login {
+	width: 50%;
+	margin: auto;
+}
+
+.delete {
+	margin-top: 25%;
+	cursor: pointer;
+}

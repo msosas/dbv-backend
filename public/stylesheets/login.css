@@ -1,0 +1,24 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #545349;
+}
+
+.container {
+	margin: auto;
+	width: 700px;
+	
+	text-align: center;
+
+}
+
+#login {
+
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30%;
+}
+

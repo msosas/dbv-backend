@@ -1,0 +1,22 @@
+{
+  "name": "dbv-backend",
+  "version": "1.0.0",
+  "description": "API para versionado de DB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@172.100.100.30:palpitos/dbv-backend.git"
+  },
+  "author": "Matias Sosa",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "moments": "0.0.2",
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0"
+  }
+}
