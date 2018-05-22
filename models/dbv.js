@@ -229,8 +229,13 @@ module.exports = {
 	},
 	push: function(localBranch, callback) {     
 	  exec("git -C " + REPOPATH + " push origin " + localBranch, function(err, data) {
-	    if (err) { callback(err); }
-	    else { callback(null, data.toString()); }
+	    if (err) { 
+	    	console.log(err);
+	    	callback(err); 
+	    }
+	    else { 
+	    	callback(null, JSON.stringify(data)); 
+	    }
 	  });
 	},
 	getBranches: function(callback) {
