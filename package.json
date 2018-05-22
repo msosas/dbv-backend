@@ -1,14 +1,14 @@
 {
-  "name": "dbv-backend",
+  "name": "sorteo-mundial",
   "version": "1.0.0",
-  "description": "API para versionado de DB",
+  "description": "API para el manejo de la APP del sorteo",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@172.100.100.30:palpitos/dbv-backend.git"
+    "url": "git@172.100.100.30:palpitos/sorteo-mundial.git"
   },
   "author": "Matias Sosa",
   "license": "ISC",
