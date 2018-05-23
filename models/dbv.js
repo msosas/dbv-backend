@@ -271,7 +271,7 @@ module.exports = {
 	  else*/ {
 	    var execSync = require("child_process").execSync;
 	    var fs = require('fs');
-	    var spPath = REPOPATH + "stored-procedures/";  //directory path
+	    var spPath = REPOPATH + "/stored-procedures/";  //directory path
 	    var files = [];
 	    var error;
 	    fs.readdir(spPath, function(err,list){
@@ -310,4 +310,15 @@ module.exports = {
 	    }
 	  });
 	},
+	changeBranch: function(branch, callback) {
+		exec("git -C " + REPOPATH + " checkout " + branch, function(err,data) {
+			if (err) { 
+				console.log(err);
+				callback(err); 
+			}
+			else {
+				callback(null, "OK")
+			}
+		})
+	}
 }

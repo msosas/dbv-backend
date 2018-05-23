@@ -27,6 +27,7 @@ var getBranches = require('./routes/getBranches');
 var checkout = require('./routes/checkout');
 var updateSchema = require('./routes/updateSchema')
 var differences = require('./routes/differences')
+var changeBranch = require('./routes/changeBranch')
 /*var saveFile = require('./routes/save_file')
 var setRemote = require('./routes/set_remote')
 var compareDev = require('./routes/compare_with_dev')
@@ -58,6 +59,7 @@ app.use('/', getBranches);
 app.use('/', checkout);
 app.use('/', updateSchema);
 app.use('/', differences);
+app.use('/', changeBranch);
 /*
 app.use('/', saveFile);
 app.use('/', setRemote);
