@@ -301,9 +301,13 @@ module.exports = {
 	},
 	differences: function(file, callback) {
 	  exec("git -C " + REPOPATH + " diff -- " + file, function(err,data){
-	    if (err) { callback(err); }
-
-	    else { callback(null, JSON.stringify(data.toString().split('\n'))) ; }
+	    if (err) { 
+	    	console.log(err);
+	    	callback(err); 
+	    }
+	    else { 
+	    	callback(null, JSON.stringify(data.toString().replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").split("\n")));
+	    }
 	  });
 	},
 }
