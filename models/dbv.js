@@ -65,6 +65,7 @@ module.exports = {
 	  });  
 	},
 	generateStoredProcedures: function(callback) {
+		var execSync = require("child_process").execSync;
 	  var connection = mysql.createConnection({
 	    host     : DBSERVER,
 	    port     : DBPORT,
@@ -100,7 +101,7 @@ module.exports = {
 	                var spPath = REPOPATH + "/stored-procedures/" + storedProcedure + ".sql";
 	                var fs = require('fs');
 	                fs.writeFile(spPath, showCreate, function(err,data) {
-	                	console.log(spPath);
+	                	execSync('./removeDefiner' + ' ' + spPath + ' ' + spPath);
 	                  itemCounter ++;
 	                  if(err) {  var error = err; }
 	                  else {

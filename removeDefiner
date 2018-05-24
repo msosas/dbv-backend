@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+
+import sys
+
+def removeDefiner(line):
+    if 'DEFINER=`' in line.upper():
+        index = line.find('DEFINER=`')
+        colon = '`'
+        c = 1
+        for i in range(index+9, len(line)):
+            if line[i] == colon: c += 1
+            if c == 4:
+                return line[:index] + line[i+1:]
+    return line
+
+def writeFile(inFile, outFile):
+    fin = open(inFile, 'r')
+    content = map(removeDefiner, fin.readlines())
+    fout = open(outFile, 'w')
+    fout.write(''.join(tuple(content)))
+    fout.close()
+    fin.close()
+
+if __name__ == '__main__':
+    if len(sys.argv) == 3:
+        writeFile(sys.argv[1], sys.argv[2])
+    else:
+        print('removeDefiner inFile outFile')
