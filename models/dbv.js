@@ -87,13 +87,13 @@ module.exports = {
 	        connection.query(query, function(error, results, fields) {
 	          if(error) callback(error);
 	          else { 
-	            var procType = results[0].type; 
+	            var procType = results[0].type;
 	            var query = "SHOW CREATE " + procType + " " + DB + "." + storedProcedure;
 	            connection.query(query, function(error, results, fields) {
 	              if(error) callback(error);
 	              else {
 	                var showCreate = [];
-	                showCreate.push(results[0]["Create Procedure"]);
+	                showCreate.push(results[0]["Create " + procType.toLocaleLowerCase().replace(/^.{1}/g, procType[0].toUpperCase())]);
 	                showCreate.unshift("delimiter ;;");
 	                showCreate.unshift("/*!50003 DROP " + procType + " IF EXISTS " + storedProcedure + "*/;");
 	                showCreate.push(";;");
@@ -123,7 +123,7 @@ module.exports = {
 	    }
 	  }); 
 	},
-	generateTables: function(callback) {
+	generateTables: function(callback) {/*
 	  var connection = mysql.createConnection({
 	    host     : DBSERVER,
 	    port     : DBPORT,
@@ -171,7 +171,7 @@ module.exports = {
 	      });
 	    }
 	  }); 
-	},
+	*/},
 	commit: function(message, callback) {
 	  exec("git -C " + REPOPATH + " status --porcelain", function(err, data) {
 	    if (err) { callback(err); }
