@@ -301,13 +301,28 @@ module.exports = {
 	  } 
 	},
 	differences: function(file, callback) {
+		var fs = require('fs');
+		var newFileSent = false;
 	  exec("git -C " + REPOPATH + " diff -- " + file, function(err,data){
 	    if (err) { 
 	    	console.log(err);
 	    	callback(err); 
 	    }
-	    else { 
-	    	callback(null, JSON.stringify(data.toString().replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").split("\n")));
+	    else {
+	    	if (data === '') {
+	    		newFileSent = true;
+	    		console.log(file);
+	    		fs.readFile(REPOPATH + '/' + file, 'utf8', function (err, content) {
+	    			if (err) {
+	    				console.log(err);
+	    				callback(err);
+	    			}
+	    			callback(null, JSON.stringify(content.toString().replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").split("\n")));
+	    		})
+	    	}
+	    	if (!newFileSent) {
+	    		callback(null, JSON.stringify(data.toString().replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").split("\n")));
+	    	}
 	    }
 	  });
 	},
