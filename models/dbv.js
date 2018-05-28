@@ -94,9 +94,9 @@ module.exports = {
 	              else {
 	                var showCreate = [];
 	                showCreate.push(results[0]["Create " + procType.toLocaleLowerCase().replace(/^.{1}/g, procType[0].toUpperCase())]);
-	                showCreate.unshift("delimiter ;;");
+	                showCreate.unshift("DELIMITER $$");
 	                showCreate.unshift("/*!50003 DROP " + procType + " IF EXISTS " + storedProcedure + "*/;");
-	                showCreate.push(";;");
+	                showCreate.push("$$");
 	                showCreate = showCreate.join('\n');
 	                var spPath = REPOPATH + "/stored-procedures/" + storedProcedure + ".sql";
 	                var fs = require('fs');
@@ -264,41 +264,38 @@ module.exports = {
 	    port     : DBPORT,
 	    user     : 'root',
 	    password : PASSWORD,
-	    database : DB
+	    database : DB,
+	    multipleStatements: true
 	  });
-	  /*if (false > -1 ) {
-	    callback("Can't update over development or production servers");
-	  }
-	  else*/ {
-	    var execSync = require("child_process").execSync;
-	    var fs = require('fs');
-	    var spPath = REPOPATH + "/stored-procedures/";  //directory path
-	    var files = [];
-	    var error;
-	    fs.readdir(spPath, function(err,list){
-	      if(err) { callback(err); }
-	      else {
-	        files = list;
-	        for (var i = 0; i<files.length; i++) {
-	          /*fs.readFile(spPath + files[i], 'utf8', function(err, data){
-	            if(err) callback(err); 
-	            else {
-	              var query = data.toString();
-	              console.log(query);
-	              connection2.query(query, function(error, results, fields) {
-	                if (error) { callback(error); }
-	                else {
-	                  callback(null, "done");  
-	                }
-	              });
-	            }             
-	          });*/
-	          execSync(CONNECTION + " " + DB +  "<" + spPath + files[i]);
-	        }
-	        callback(null, "done");
-	      }       
-	    });    
-	  } 
+    var execSync = require("child_process").execSync;
+    var fs = require('fs');
+    var spPath = REPOPATH + "/stored-procedures/";
+    var files = [];
+    var error;
+    fs.readdir(spPath, function(err,list) {
+      if(err) { callback(err); }
+      else {
+        files = list;
+        for (var i = 0; i<files.length; i++) {
+          fs.readFile(spPath + files[i], 'utf8', function(err, data){
+            if(err) callback(err); 
+            else {
+              data = data.replace('DELIMITER $$', '')
+              data = data.replace('$$', '')
+              connection.query(data, function(error, results, fields) {
+                if (error) { callback(error); }
+                else {
+                  console.log('passed');
+                }
+              });
+            }             
+          });
+        }
+        if (i === files.length) {
+        	callback(null, "done");	
+        }
+      }
+    });
 	},
 	differences: function(file, callback) {
 		var fs = require('fs');
