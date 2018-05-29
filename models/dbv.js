@@ -333,5 +333,16 @@ module.exports = {
 				callback(null, "OK")
 			}
 		})
+	},
+	deleteFile(file, callback) {
+		var fs = require('fs');
+		fs.unlink(REPOPATH + '/' + file, (err) => {
+		  if (err) {
+		  	console.log(err);
+		  	callback(err);
+		  } else {
+		  	callback(null, "OK");
+		  }
+		});
 	}
 }
