@@ -284,15 +284,12 @@ module.exports = {
               data = data.replace('$$', '')
               connection.query(data, function(error, results, fields) {
                 if (error) { callback(error); }
-                else {
-                  console.log('passed');
-                }
               });
             }             
           });
         }
         if (i === files.length) {
-        	callback(null, "done");	
+        	callback(null, "OK");	
         }
       }
     });
