@@ -123,7 +123,7 @@ module.exports = {
 	    }
 	  }); 
 	},
-	generateTables: function(callback) {/*
+	generateTables: function(callback) {
 	  var connection = mysql.createConnection({
 	    host     : DBSERVER,
 	    port     : DBPORT,
@@ -131,12 +131,10 @@ module.exports = {
 	    password : PASSWORD,
 	    database : DB
 	  });
-
 	  var query = "SELECT table_name FROM information_schema.tables WHERE table_schema = "+ QUOTE + DB + QUOTE;
 	  connection.query(query, function (error, results, fields) {
 	    if (error || results.length < 1) callback(error);
-	    else { 
-	      var itemCounter = 0;
+	    else {
 	      var arraySize = results.length;
 	      results.forEach(function(element, index) {
 	        var tableName = element.table_name;
@@ -150,13 +148,15 @@ module.exports = {
 
 	            var showCreate = showCreate.join('\n');
 	        
-	            var tablePath = REPOPATH + "tables/" + tableName + ".sql";
+	            var tablePath = REPOPATH + "/tables/" + tableName + ".sql";
 	            var fs = require('fs');
 	            fs.writeFile(tablePath, showCreate, function(err,data) {
-	              itemCounter ++;
-	              if(err) {  var error = err; }
+	              if(err) {
+	              	var error = err;
+	              	console.log(err);
+	              }
 	              else {
-	                if (itemCounter == arraySize) {
+	                if (index + 1 === arraySize) {
 	                  if (error) {
 	                    callback(error);
 	                  }
@@ -165,13 +165,13 @@ module.exports = {
 	                  } 
 	                }
 	              }
-	            });    
+	            });
 	          } 
 	        });
 	      });
 	    }
 	  }); 
-	*/},
+	},
 	commit: function(message, callback) {
 	  exec("git -C " + REPOPATH + " status --porcelain", function(err, data) {
 	    if (err) { callback(err); }

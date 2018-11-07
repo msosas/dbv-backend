@@ -10,12 +10,13 @@ router.get('/generate_files', cors(), function(req, res) {
   dbv.generateStoredProcedures(function(err,data) {
     if (err) { console.log(err);   }
     else {
-    	console.log(data);
-      /*dbv.generateTables(function(err,data){
+      dbv.generateTables(function(err,data){
         if (err) { console.log(err); }
-        else { return res.sendStatus(200); }
-      });*/
-      return res.sendStatus(200)
+        else { 
+          return res.sendStatus(200); 
+        }
+      });
+      //return res.sendStatus(200)
     }
   });
 });
